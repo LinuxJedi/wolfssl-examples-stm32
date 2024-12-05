@@ -1,0 +1,3 @@
+[submodule "STM32MP13/STM32CubeMP13"]
+	path = STM32MP135F-DK/STM32CubeMP13
+	url = git@github.com:STMicroelectronics/STM32CubeMP13

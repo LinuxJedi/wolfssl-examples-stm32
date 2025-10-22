@@ -1,0 +1,5 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "mikroBUS")(type "Legacy")(uri "${KIPRJMOD}/mikroBus/mikroBUS.lib")(options "")(descr ""))
+  (lib (name "ST33KTPM2I3WBZA9")(type "KiCad")(uri "${KIPRJMOD}/LIB_ST33KTPM2I3WBZA9/ST33KTPM2I3WBZA9.kicad_sym")(options "")(descr ""))
+)

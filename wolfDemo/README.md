@@ -9,7 +9,7 @@ sockets to expand with thousands of different peripherals.
 
 The following subdirectories exist here:
 
-## wolfDemo_STM32U585
+## [wolfDemo_STM32U585](wolfDemo_STM32U585)
 
 The wolfDemo board KiCad project files.
 
@@ -18,11 +18,11 @@ the rear for JLCPCB QR codes. It is recommended that lead-free HASL is used.
 
 There is also the following associated files:
 
-### `wolfDemo v1 Manual.pdf`
+### [wolfDemo v1 Manual.pdf](<wolfDemo v1 Manual.pdf>)
 
 This is an export of the user manual for the board.
 
-### `wolfDemo_backboard.stl`
+### [wolfDemo_backboard.stl](wolfDemo_backboard.stl)
 
 This is an STL to 3D print the backboard for the wolfDemo board.
 
@@ -32,12 +32,12 @@ The boards are bolted together using M3 7mm bolts and M3 nuts. Five 12.7mm
 rubber feet are stuck onto this board to stop it slipping on surfaces it rests
 on.
 
-## wolfDemo_ST33
+## [wolfDemo_ST33](wolfDemo_ST33)
 
 This is a mikroBus click board design for the ST33K TPM chip.
 
 Documentation for this is coming soon.
 
-## examples
+## [examples](examples)
 
 All the code examples for the wolfDemo board can be found here.

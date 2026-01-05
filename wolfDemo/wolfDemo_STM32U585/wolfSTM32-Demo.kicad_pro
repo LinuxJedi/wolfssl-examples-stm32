@@ -58,20 +58,7 @@
           "width": 0.0
         }
       ],
-      "drc_exclusions": [
-        [
-          "lib_footprint_mismatch|128933500|119241000|7557fb4f-dcbf-4a28-9c07-b0ae34c07a4a|00000000-0000-0000-0000-000000000000",
-          ""
-        ],
-        [
-          "lib_footprint_mismatch|171672500|138700000|6e21bbb5-9676-4ad1-bae5-5742da615686|00000000-0000-0000-0000-000000000000",
-          ""
-        ],
-        [
-          "lib_footprint_mismatch|86914000|125498500|a70891c7-ea87-45db-8729-3c891172c294|00000000-0000-0000-0000-000000000000",
-          ""
-        ]
-      ],
+      "drc_exclusions": [],
       "meta": {
         "version": 2
       },
@@ -101,7 +88,7 @@
         "items_not_allowed": "error",
         "length_out_of_range": "error",
         "lib_footprint_issues": "warning",
-        "lib_footprint_mismatch": "warning",
+        "lib_footprint_mismatch": "ignore",
         "malformed_courtyard": "error",
         "microvia_drill_out_of_range": "error",
         "mirrored_text_on_front_layer": "warning",
@@ -516,7 +503,7 @@
       "gencad": "",
       "idf": "",
       "netlist": "",
-      "plot": "svg",
+      "plot": "gerbers",
       "pos_files": "",
       "specctra_dsn": "",
       "step": "wolfSTM32-Demo.stl",

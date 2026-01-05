@@ -36,12 +36,46 @@ be backed-up too.
 ## [bench_tui.py](bench_tui.py)
 
 This script takes the live wolfCrypt benchmark output via UART and displays it
-in a easy to consume table form. This requires Python `rich` to be installed.
+in a easy to consume table form. This requires Python `rich` to be installed
+using the following, or by using your package manager:
+
+```
+pip3 install rich
+```
 
 Usage (in Linux):
 
 ```
 python bench_tui.py /dev/ttyUSB0 115200
+```
+
+Usage (in Windows):
+
+1. Install the CH340G USB UART driver if needed (shows as "USB-SERIAL CH340" in Device Manager).
+2. Find the COM port in Device Manager (for example `COM3`).
+3. Install dependencies (PowerShell or Command Prompt):
+
+```
+python -m pip install rich
+```
+
+4. Run:
+
+```
+python bench_tui.py COM3 115200
+```
+
+Usage (in macOS):
+
+```
+ls /dev/tty.usbserial*
+```
+
+Note the result, and then do the following (assuming the result is
+tty.usbserial-1440):
+
+```
+python3 bench_tui.py /dev/tty.usbserial-1440
 ```
 
 A demo mode can be executed using:
@@ -52,8 +86,8 @@ python bench_tui.py --demo
 
 ## [bench_tpm_tui.py](bench_tpm_tui.py)
 
-This is very similar to `bench_tui.py`, but is designed to work with the wolfTPM
-benchmark output.
+This is very similar to `bench_tui.py`, but is designed to work with the
+wolfTPM benchmark output.
 
 Usage (in Linux):
 
@@ -61,9 +95,14 @@ Usage (in Linux):
 python bench_tpm_tui.py /dev/ttyUSB0 115200
 ```
 
+Usage (in Windows):
+
+```
+python bench_tpm_tui.py COM3 115200
+```
+
 A demo mode can be executed using:
 
 ```
 python bench_tpm_tui.py --demo
 ```
-

@@ -9,7 +9,7 @@ ap.add_argument("baud", nargs="?", type=int, default=115200, help="Baud rate (de
 ap.add_argument("--demo", action="store_true", help="Run a local demo data source to preview layout")
 args = ap.parse_args()
 
-PORT = args.port if args.port and args.port.startswith("/dev/") else None
+PORT = args.port if args.port and (args.port.startswith("/dev/") or args.port.upper().startswith("COM")) else None
 BAUD = args.baud
 USE_SERIAL = bool(PORT)
 

@@ -51,12 +51,17 @@ python bench_tui.py /dev/ttyUSB0 115200
 
 Usage (in Windows):
 
-1. Install the CH340G USB UART driver if needed (shows as "USB-SERIAL CH340" in Device Manager).
-2. Find the COM port in Device Manager (for example `COM3`).
+1. Install Python 3 from the Windows Store
+2. Find the COM port for the CH340 on the wolfDemo board (usually `COM3`) by using:
+
+```
+pnputil /enum-devices /class Ports
+```
+
 3. Install dependencies (PowerShell or Command Prompt):
 
 ```
-python -m pip install rich
+pip install rich pyserial
 ```
 
 4. Run:

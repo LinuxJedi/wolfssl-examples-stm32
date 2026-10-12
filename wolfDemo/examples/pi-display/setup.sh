@@ -104,8 +104,9 @@ done
 set +f
 echo "${ARGS# } quiet logo.nologo" > "$CMDLINE"
 
-# Hide the rainbow splash screen
-if ! grep -q '^disable_splash=' "$BOOT/config.txt"; then
+# Hide the rainbow splash screen. Later lines override earlier ones, so this
+# also overrides an earlier disable_splash=0.
+if ! grep -q '^disable_splash=1' "$BOOT/config.txt"; then
     printf '\n[all]\ndisable_splash=1\n' >> "$BOOT/config.txt"
 fi
 

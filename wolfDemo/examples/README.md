@@ -41,7 +41,7 @@ be backed-up too.
 ## [bench_tui.py](bench_tui.py)
 
 This script takes the live wolfCrypt benchmark output via UART and displays it
-in a easy to consume table form. If the board is not plugged in, or is
+in an easy-to-consume table form. If the board is not plugged in, or is
 unplugged, it waits for the board to be connected. This requires Python
 `pyserial` to be installed using the following, or by using your package
 manager:

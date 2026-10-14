@@ -74,23 +74,26 @@ The setup script:
   to tty3, so boot messages are not shown on the HDMI display. The original
   `cmdline.txt` is saved as `cmdline.txt.orig` in `/boot/firmware`.
 
-## Text size
+## Colours and text size
+
+The display uses black text on a white background. Set `THEME=dark` for white
+text on a black background instead.
 
 The text size is set by the font height in pixels, `FONT_SIZE`. On a 1080p
 monitor:
 
 | FONT_SIZE | Screen (columns x rows) | Table rows shown |
 |-----------|-------------------------|------------------|
-| 28 | 112 x 32 | 20 |
-| 32 (default) | 101 x 28 | 16 |
-| 36 | 87 x 25 | 13 |
+| 28 | 112 x 33 | 21 |
+| 32 (default) | 101 x 29 | 17 |
+| 36 | 87 x 26 | 14 |
 
 The table needs 88 columns, and shrinks its columns to fit narrower screens.
-To change the size, run the setup script again with the variable set, then
-restart the display:
+To change either setting, run the setup script again with the variables set,
+then restart the display:
 
 ```
-sudo FONT_SIZE=36 ./pi-display/setup.sh
+sudo THEME=dark FONT_SIZE=36 ./pi-display/setup.sh
 sudo systemctl restart wolfdemo-display
 ```
 

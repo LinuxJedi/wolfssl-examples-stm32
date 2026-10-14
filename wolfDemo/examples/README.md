@@ -96,10 +96,12 @@ A demo mode can be executed using:
 python bench_tui.py --demo
 ```
 
-There are also two options for terminals with a black background:
+There are also options for a nicer look in terminals that support 24-bit
+colour:
 
-* `--dark` uses 24-bit colours designed for a black background, with
-  background colours for the zebra striping and the newest result.
+* `--light` or `--dark` use 24-bit colours designed for a white or black
+  background, with background colours for the zebra striping and the newest
+  result.
 * `--logo wolfssl_logo.png` draws the wolfSSL logo image at the top, in
   terminals that support sixel graphics and report their character cell size,
   such as foot. This needs Python `pillow` (`pip3 install pillow`). With
@@ -107,7 +109,7 @@ There are also two options for terminals with a black background:
   and Windows, show a logo drawn with text characters instead.
 
 ```
-python bench_tui.py --dark --logo wolfssl_logo.png /dev/ttyUSB0 115200
+python bench_tui.py --light --logo wolfssl_logo.png /dev/ttyUSB0 115200
 ```
 
 ## [pi-display](pi-display)

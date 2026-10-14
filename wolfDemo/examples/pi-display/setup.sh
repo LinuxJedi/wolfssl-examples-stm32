@@ -28,7 +28,8 @@
 # Usage: sudo ./setup.sh [directory with bench_tui.py and wolfssl_logo.png]
 #
 # Variables:
-#   FONT_SIZE = 32  (font height in pixels, bigger text shows fewer rows)
+#   FONT_SIZE = 32     (font height in pixels, bigger text shows fewer rows)
+#   THEME     = light  (light for a white background, or dark for black)
 
 set -eu
 
@@ -36,11 +37,21 @@ HERE=$(cd "$(dirname "$0")" && pwd)
 SRC=${1:-$HERE/..}
 FONT_SIZE=${FONT_SIZE:-32}
 LINE_HEIGHT=$(((FONT_SIZE * 115 + 50) / 100))
+THEME=${THEME:-light}
 
 if [ "$(id -u)" -ne 0 ]; then
     echo "Run this as root: sudo $0" >&2
     exit 1
 fi
+# The terminal's background and text colours, to match bench_tui.py's theme
+case $THEME in
+    light) BACKGROUND=ffffff FOREGROUND=1f2328 ;;
+    dark) BACKGROUND=000000 FOREGROUND=d0d0d0 ;;
+    *)
+        echo "THEME must be light or dark" >&2
+        exit 1
+        ;;
+esac
 for f in bench_tui.py wolfssl_logo.png; do
     if [ ! -f "$SRC/$f" ]; then
         echo "Cannot find $f in $SRC" >&2
@@ -68,9 +79,11 @@ usermod -a -G dialout,video,render wolfdemo
 install -d /opt/wolfdemo
 install -m 0644 "$SRC/bench_tui.py" "$SRC/wolfssl_logo.png" /opt/wolfdemo/
 sed -e "s|@FONT_SIZE@|$FONT_SIZE|" -e "s|@LINE_HEIGHT@|$LINE_HEIGHT|" \
+    -e "s|@BACKGROUND@|$BACKGROUND|" -e "s|@FOREGROUND@|$FOREGROUND|" \
     "$HERE/foot.ini" > /opt/wolfdemo/foot.ini
 install -m 0644 "$HERE/99-wolfdemo.rules" /etc/udev/rules.d/
-install -m 0644 "$HERE/wolfdemo-display.service" /etc/systemd/system/
+sed "s|@THEME@|$THEME|" "$HERE/wolfdemo-display.service" \
+    > /etc/systemd/system/wolfdemo-display.service
 
 # cage shows a mouse pointer in the middle of the screen, even without a
 # mouse. Replace the default cursor theme with one where every pointer is a

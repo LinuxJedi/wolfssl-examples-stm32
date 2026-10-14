@@ -7,7 +7,9 @@ ap = argparse.ArgumentParser(description="wolfCrypt benchmark live TUI (single t
 ap.add_argument("port", nargs="?", help="Serial port like /dev/ttyACM0")
 ap.add_argument("baud", nargs="?", type=int, default=115200, help="Baud rate (default 115200)")
 ap.add_argument("--demo", action="store_true", help="Run a local demo data source to preview layout")
-ap.add_argument("--dark", action="store_true", help="Use 24-bit colours designed for a black background")
+themes = ap.add_mutually_exclusive_group()
+themes.add_argument("--dark", action="store_true", help="Use 24-bit colours designed for a black background")
+themes.add_argument("--light", action="store_true", help="Use 24-bit colours designed for a white background")
 ap.add_argument("--logo", metavar="PNG", help="Draw this image as the logo, in terminals with sixel graphics (needs Pillow)")
 args = ap.parse_args()
 
@@ -292,7 +294,7 @@ CLASSIC = {
     "muted": (DIM,), "wolf": (BOLD, WHITE), "ssl": (BOLD, CYAN),
     "bench": (BOLD, GREEN), "live": (BOLD, RED), "hw": (BOLD, GREEN),
     "sw": (BOLD, YELLOW), "waiting": (BOLD,), "underline": (UNDERLINE,),
-    "emoji": True, "bg": None,
+    "emoji": True, "bg": None, "invert_logo": False,
 }
 # The Linux console dims by replacing the text colour, so stripe rows with a
 # background colour instead, with blue redefined as a dark grey. It has no
@@ -312,9 +314,25 @@ DARK = {
     "ssl": (BOLD, fg("1fbeca")), "bench": (BOLD, fg("7ee787")),
     "live": (BOLD, fg("ff6b6b")), "hw": (BOLD, fg("7ee787")),
     "sw": (BOLD, fg("f2cc60")), "waiting": (BOLD, fg("ffffff")),
-    "underline": (), "emoji": False, "bg": "000000",
+    "underline": (), "emoji": False, "bg": "000000", "invert_logo": True,
 }
-THEME = DARK if args.dark else CONSOLE if LINUX_CONSOLE else CLASSIC
+# 24-bit colours for a white background. The wolfSSL teal is too light for
+# text on white, so the units use a darker shade of it.
+LIGHT = {
+    "border": (fg("b4bec8"),), "head": (BOLD, fg("1f2328")),
+    "algo": (BOLD, fg("1f2328")), "mode": (fg("3d454d"),),
+    "num": (BOLD, fg("1f2328")), "mem": (fg("57606a"),),
+    "rate": (fg("0a7f8a"),), "ops": (fg("8c3bb3"),),
+    "stripe": (), "stripe_row": (bg("e1e7ee"),),
+    "newest": (BOLD, fg("1a7f37")), "newest_row": (bg("cdf2d6"),),
+    "muted": (fg("57606a"),), "wolf": (BOLD, fg("1f2328")),
+    "ssl": (BOLD, fg("1fbeca")), "bench": (BOLD, fg("1a7f37")),
+    "live": (BOLD, fg("cf222e")), "hw": (BOLD, fg("1a7f37")),
+    "sw": (BOLD, fg("9a6700")), "waiting": (BOLD, fg("1f2328")),
+    "underline": (), "emoji": False, "bg": "ffffff", "invert_logo": False,
+}
+THEME = (DARK if args.dark else LIGHT if args.light else
+         CONSOLE if LINUX_CONSOLE else CLASSIC)
 
 # Rounded box drawing characters
 BOX_TL, BOX_TR, BOX_BL, BOX_BR = "\u256d", "\u256e", "\u2570", "\u256f"
@@ -438,7 +456,7 @@ class SixelLogo:
     def __init__(self, path):
         from PIL import Image
         logo = Image.open(path).convert("RGBA")
-        if THEME["bg"]:
+        if THEME["invert_logo"]:
             # Draw the black parts of the logo in white on a dark background
             px = [(255, 255, 255, a) if r + g + b < 96 else (r, g, b, a)
                   for r, g, b, a in logo.getdata()]
@@ -458,7 +476,7 @@ class SixelLogo:
             flat.alpha_composite(self.logo)
             img = flat.convert("RGB").resize((w, h), Image.LANCZOS).quantize(64)
             if THEME["bg"]:
-                # leave the (black) background transparent
+                # leave the background transparent
                 alpha = self.logo.getchannel("A").resize((w, h), Image.LANCZOS)
                 mask = [a > 16 for a in alpha.getdata()]
             else:

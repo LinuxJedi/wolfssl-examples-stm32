@@ -1,5 +1,6 @@
 # Shows the wolfDemo wolfCrypt benchmark full screen on the HDMI display, in
-# the foot terminal under the cage kiosk compositor. Installed by setup.sh.
+# the foot terminal under the cage kiosk compositor. Installed by setup.sh,
+# which fills in @THEME@.
 
 [Unit]
 Description=wolfDemo wolfCrypt benchmark display
@@ -19,8 +20,10 @@ StateDirectory=wolfdemo
 Environment=XDG_RUNTIME_DIR=/run/wolfdemo-display HOME=/var/lib/wolfdemo
 # The invisible mouse pointer installed by setup.sh
 Environment=XCURSOR_PATH=/opt/wolfdemo/icons XCURSOR_THEME=default
-ExecStart=/usr/bin/cage -- /usr/bin/foot --config=/opt/wolfdemo/foot.ini \
-    /usr/bin/python3 /opt/wolfdemo/bench_tui.py --dark \
+# -d stops foot from drawing a title bar, which would leave a strip at the
+# bottom of the screen
+ExecStart=/usr/bin/cage -d -- /usr/bin/foot --config=/opt/wolfdemo/foot.ini \
+    /usr/bin/python3 /opt/wolfdemo/bench_tui.py --@THEME@ \
     --logo /opt/wolfdemo/wolfssl_logo.png /dev/wolfdemo 115200
 # The Pi Zero has a single core, keep background jobs from delaying the display
 Nice=-10
